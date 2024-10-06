@@ -1,0 +1,30 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: API-Gateway
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: QuizzyWhiz
+            uri: lb://QuizzyWhiz
+            predicates:
+              - Path=/quiz/**
+          - id: Questions-Service
+            uri: lb://Questions-Service
+            predicates:
+              - Path=/question/**
+#          - id: QuizzyWhiz
+#            uri: lb://QuizzyWhiz
+#          #   predicates:
+#          #     - Path=/paths/**
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
